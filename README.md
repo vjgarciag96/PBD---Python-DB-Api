@@ -10,7 +10,7 @@ Crear la base de datos de Sectores y Personas. Hay un script con las consultas n
 Alternativas para la instalación: https://www.linuxbabe.com/linux-server/install-apache-mariadb-and-php7-lamp-stack-on-ubuntu-16-04-lts
 Extra: para instalar db.py, $sudo pip3 install db
 
-EJEMPLOS DISPONIBLES EN EL GITHUB.
+EJEMPLOS DISPONIBLES EN EL REPOSITORIO.
 1. mysql_sample.py --Ejemplo de CRUD y de creación y destrucción de las tablas Personas y Sectores.
 2. sqlite_sample.py --Ejemplo de CRUD y de creación y destrucción de la base de datos embebida.
 3. demo_select.py -- Ejemplo de selección
