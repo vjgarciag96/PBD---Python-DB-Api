@@ -3,11 +3,16 @@ La Python DB API es un conjunto de clases y funciones comunes y estandarizadas p
 
 REQUISITOS PREVIOS.
 
-Python. https://www.python.org/downloads/ 
+Python. https://www.python.org/downloads/.
+
 DBMS MariaDB o MySQL, https://mariadb.com/kb/en/library/getting-installing-and-upgrading-mariadb/ o https://dev.mysql.com/downloads/installer/, y el motor de bases de datos embebidadas SQLite, https://sqlite.org/download.html.
+
 Interfaz de Python para bases de datos Mysql (https://stackoverflow.com/questions/25865270/how-to-install-python-mysqldb-module-using-pip) y SQLite (incluido en la python standa). 
-Es necesario crear un usuario en la base de datos con nombre ''
+
+Es necesario crear un usuario en la base de datos con nombre pbd_user.
+
 Crear la base de datos de Sectores y Personas. Hay un script con las consultas necesarias para su creación que está disponible en el fichero 'create_db_queries.sql' (son las mismas para MariaDB y para SQLite).
+
 Alternativas para la instalación: https://www.linuxbabe.com/linux-server/install-apache-mariadb-and-php7-lamp-stack-on-ubuntu-16-04-lts
 Extra: para instalar db.py, $sudo pip3 install db
 
