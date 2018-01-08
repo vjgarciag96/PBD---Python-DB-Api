@@ -159,11 +159,12 @@ def delete_queries(connection, cursor):
     deletepoblacionquery = "DELETE FROM poblacion WHERE dni = '111000111'"
     try:
         cursor.execute(deletepoblacionquery)
-        connection.commit()
         print("Deleted poblacion row with dni 111000111")
     except:
         connection.rollback()
         print("Error deleting row")
+    finally:
+        connection.commit()
 
 def print_sectores_row(row):
     print("--------------------------------------------")
@@ -201,10 +202,14 @@ def print_cursor_result_poblacion(result):
         print("Error: Unable to fetch data")
     print("--------------------------------------------")
 
+def example_description(cursor):
+    selectsectoresquery = "SELECT * FROM sectores"
+    cursor.execute(selectsectoresquery)
+    print(cursor.rowcount)
+
 if __name__ == '__main__':
     connection = stablish_connection()
     cursor = create_cursor(connection)
-
     print("Consultas de selección con la base de datos con varios registros")
     select_queries(cursor)
     print("Eliminación de todas las tablas")

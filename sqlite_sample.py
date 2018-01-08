@@ -8,7 +8,8 @@ def close_connection(connection):
     connection.close()
 
 def create_cursor(conn):
-    return conn.cursor()
+    cursor = conn.cursor()
+    return cursor
 
 def close_cursor(cursor):
     cursor.close()
@@ -61,50 +62,53 @@ def create_queries(cursor):
     cursor.execute(createsectoresquery)
     cursor.execute(createpoblacionquery)
 
-def insert_queries(connection, cursor):
+def insert_tuples(connection, cursor):
     try:
         with open('insert_script.sql', 'r') as myscript:
             data = myscript.read()
         cursor.executescript(data)
-        connection.commit()
     except:
         print('Error inserting data')
         connection.rollback()
-
+    finally:
+        connection.commit()
 
 def update_queries(connection, cursor):
-    updatesectoresquery = """UPDATE sectores SET nombreS = 'Desconocido' WHERE codS = 4"""
-    updatepoblacionquery = """UPDATE poblacion SET cp = 20251 WHERE dni = '111000111'"""
+    update_sectores_query = "UPDATE sectores SET nombreS = ? WHERE codS = ?"
+    update_poblacion_query = "UPDATE poblacion SET cp = ? WHERE dni = ?"
 
-    print("Contenido de las tuplas antes de la ejecución: ")
+    print("Contenido de las tuplas antes de la actualización")
+
     cursor.execute("SELECT * FROM sectores WHERE codS = 4")
-    sector = cursor.fetchone()
-    print_sectores_row(sector)
+    sector_row = cursor.fetchone()
+    print_sectores_row(sector_row)
 
-    cursor.execute("SELECT * FROM poblacion WHERE dni = '111000111'")
-    poblacion = cursor.fetchone()
-    print_poblacion_row(poblacion)
-    print('\n')
+    cursor.execute("SELECT * FROM poblacion WHERE dni = '333444555'")
+    poblacion_row = cursor.fetchone()
+    print_poblacion_row(poblacion_row)
 
     try:
-        cursor.execute(updatepoblacionquery)
-        cursor.execute(updatesectoresquery)
-        connection.commit()
+        cursor.execute(update_poblacion_query, (20251,'333444555'))
+        cursor.execute(update_sectores_query, ('Desconocido', 4))
     except:
         print("Error updating")
         connection.rollback()
+    finally:
+        connection.commit()
 
-    print("Contenido de las tuplas después de la ejecución: ")
-    cursor.execute("SELECT * FROM sectores WHERE codS = 4")
-    sector = cursor.fetchone()
-    print_sectores_row(sector)
+        print("Contenido de las tuplas después de la ejecución")
 
-    cursor.execute("SELECT * FROM poblacion WHERE dni = '111000111'")
-    poblacion = cursor.fetchone()
-    print_poblacion_row(poblacion)
+        cursor.execute("SELECT * FROM sectores WHERE codS = 4")
+        sector_row = cursor.fetchone()
+        print_sectores_row(sector_row)
+
+        cursor.execute("SELECT * FROM poblacion WHERE dni = '333444555'")
+        poblacion_row = cursor.fetchone()
+        print_poblacion_row(poblacion_row)
+
 
 def delete_queries(connection, cursor):
-    deletepoblacionquery = "DELETE FROM poblacion WHERE dni = '111000111'"
+    deletepoblacionquery = "DELETE FROM poblacion WHERE dni = '333444555'"
     try:
         cursor.execute(deletepoblacionquery)
         connection.commit()
@@ -162,7 +166,7 @@ if __name__ == '__main__':
     print("Consultas de selección con la base de datos vacia")
     select_queries(cursor)
     print("Inserciones en la base de datos")
-    insert_queries(connection, cursor)
+    insert_tuples(connection, cursor)
     print("Consultas de selección con las nuevas inserciones")
     select_queries(cursor)
     print("Consultas de actualización")
